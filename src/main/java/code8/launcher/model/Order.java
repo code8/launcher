@@ -1,12 +1,12 @@
-package code8.launcher.model.changer;
+package code8.launcher.model;
 
-import code8.launcher.model.changer.OrderRequest.Type;
+import code8.launcher.model.OrderRequest.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import static code8.launcher.model.changer.Order.Status.created;
+import static code8.launcher.model.Order.Status.created;
 
 /**
  * todo: javadoc

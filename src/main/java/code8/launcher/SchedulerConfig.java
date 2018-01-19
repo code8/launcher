@@ -1,6 +1,6 @@
 package code8.launcher;
 
-import code8.launcher.logic.changer.OrderService;
+import code8.launcher.logic.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;

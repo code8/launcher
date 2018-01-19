@@ -1,7 +1,7 @@
-package code8.launcher.logic.changer;
+package code8.launcher.logic;
 
-import code8.launcher.model.changer.Order;
-import code8.launcher.model.changer.OrderTransaction;
+import code8.launcher.model.Order;
+import code8.launcher.model.OrderTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,9 @@ import java.math.BigDecimal;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static code8.launcher.model.changer.Order.Status.completed;
-import static code8.launcher.model.changer.Order.Status.processing;
-import static code8.launcher.model.changer.OrderTransaction.Status.processed;
+import static code8.launcher.model.Order.Status.completed;
+import static code8.launcher.model.Order.Status.processing;
+import static code8.launcher.model.OrderTransaction.Status.processed;
 
 
 /**

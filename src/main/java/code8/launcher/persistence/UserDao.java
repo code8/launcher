@@ -1,6 +1,6 @@
-package code8.launcher.logic.changer;
+package code8.launcher.persistence;
 
-import code8.launcher.model.changer.User;
+import code8.launcher.model.User;
 import code8.persistence.public_.tables.records.UserRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;

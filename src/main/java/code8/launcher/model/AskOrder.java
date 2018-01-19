@@ -1,8 +1,8 @@
-package code8.launcher.model.changer;
+package code8.launcher.model;
 
 import java.math.BigDecimal;
 
-import static code8.launcher.model.changer.OrderRequest.Type.Bid;
+import static code8.launcher.model.OrderRequest.Type.Bid;
 
 /**
  * todo: javadoc

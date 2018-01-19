@@ -1,8 +1,8 @@
 package code8.launcher.rest;
 
-import code8.launcher.logic.changer.OrderService;
-import code8.launcher.model.changer.Order;
-import code8.launcher.model.changer.OrderRequest;
+import code8.launcher.logic.OrderService;
+import code8.launcher.model.Order;
+import code8.launcher.model.OrderRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,10 +1,10 @@
 package code8.launcher.rest;
 
-import code8.launcher.logic.changer.OrderService;
-import code8.launcher.model.changer.BidOrder;
-import code8.launcher.model.changer.CoinPair;
-import code8.launcher.model.changer.Order;
-import code8.launcher.model.changer.OrderRequest;
+import code8.launcher.logic.OrderService;
+import code8.launcher.model.BidOrder;
+import code8.launcher.model.CoinPair;
+import code8.launcher.model.Order;
+import code8.launcher.model.OrderRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,8 +22,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static code8.launcher.model.changer.CoinPair.BTCvsUSD;
-import static code8.launcher.model.changer.OrderRequest.Type.Bid;
+import static code8.launcher.model.CoinPair.BTCvsUSD;
+import static code8.launcher.model.OrderRequest.Type.Bid;
 import static code8.launcher.rest.OrderController.BASE_URL;
 import static code8.launcher.rest.OrderController.NEW_ORDER;
 import static org.assertj.core.api.Assertions.assertThat;

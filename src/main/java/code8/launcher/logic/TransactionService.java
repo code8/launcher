@@ -1,6 +1,6 @@
-package code8.launcher.logic.changer;
+package code8.launcher.logic;
 
-import code8.launcher.model.changer.OrderTransaction;
+import code8.launcher.model.OrderTransaction;
 
 /**
  * todo: javadoc

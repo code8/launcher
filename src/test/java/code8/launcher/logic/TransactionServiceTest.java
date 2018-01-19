@@ -1,14 +1,6 @@
 package code8.launcher.logic;
 
-import code8.launcher.logic.changer.OrderService;
-import code8.launcher.logic.changer.TransactionService;
-import code8.launcher.logic.changer.WalletServiceBase;
-import code8.launcher.model.changer.Coin;
-import code8.launcher.model.changer.CoinPair;
-import code8.launcher.model.changer.Order;
-import code8.launcher.model.changer.OrderRequest;
-import code8.launcher.model.changer.OrderTransaction;
-import code8.launcher.model.changer.Wallet;
+import code8.launcher.model.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +10,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static code8.launcher.model.changer.CoinPair.BTCvsUSD;
-import static code8.launcher.model.changer.Order.Status.completed;
-import static code8.launcher.model.changer.Order.Status.processing;
-import static code8.launcher.model.changer.OrderRequest.Type.Ask;
-import static code8.launcher.model.changer.OrderRequest.Type.Bid;
+import static code8.launcher.model.CoinPair.BTCvsUSD;
+import static code8.launcher.model.Order.Status.completed;
+import static code8.launcher.model.Order.Status.processing;
+import static code8.launcher.model.OrderRequest.Type.Ask;
+import static code8.launcher.model.OrderRequest.Type.Bid;
 import static org.junit.Assert.assertEquals;
 
 /**

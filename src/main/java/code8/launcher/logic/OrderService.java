@@ -1,7 +1,7 @@
-package code8.launcher.logic.changer;
+package code8.launcher.logic;
 
-import code8.launcher.model.changer.Order;
-import code8.launcher.model.changer.OrderRequest;
+import code8.launcher.model.Order;
+import code8.launcher.model.OrderRequest;
 
 /**
  * todo: javadoc

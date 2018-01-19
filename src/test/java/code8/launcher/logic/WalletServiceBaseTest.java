@@ -1,7 +1,6 @@
 package code8.launcher.logic;
 
-import code8.launcher.logic.changer.WalletServiceBase;
-import code8.launcher.model.changer.Wallet;
+import code8.launcher.model.Wallet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 
-import static code8.launcher.model.changer.Coin.BTC;
-import static code8.launcher.model.changer.Coin.RUB;
+import static code8.launcher.model.Coin.BTC;
+import static code8.launcher.model.Coin.RUB;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;

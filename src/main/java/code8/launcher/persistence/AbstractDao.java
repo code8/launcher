@@ -1,4 +1,4 @@
-package code8.launcher.logic.changer;
+package code8.launcher.persistence;
 
 import org.jooq.DSLContext;
 import org.jooq.Record;

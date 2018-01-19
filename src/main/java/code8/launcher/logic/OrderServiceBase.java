@@ -1,9 +1,9 @@
-package code8.launcher.logic.changer;
+package code8.launcher.logic;
 
-import code8.launcher.model.changer.Order;
-import code8.launcher.model.changer.OrderRequest;
-import code8.launcher.model.changer.OrderTransaction;
-import code8.launcher.model.changer.Wallet;
+import code8.launcher.model.Order;
+import code8.launcher.model.OrderRequest;
+import code8.launcher.model.OrderTransaction;
+import code8.launcher.model.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.*;
 
-import static code8.launcher.model.changer.Order.Status.*;
-import static code8.launcher.model.changer.OrderRequest.Type.Bid;
+import static code8.launcher.model.Order.Status.*;
+import static code8.launcher.model.OrderRequest.Type.Bid;
 
 /**
  * todo: javadoc

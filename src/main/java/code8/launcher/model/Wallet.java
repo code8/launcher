@@ -1,4 +1,4 @@
-package code8.launcher.model.changer;
+package code8.launcher.model;
 
 import java.math.BigDecimal;
 

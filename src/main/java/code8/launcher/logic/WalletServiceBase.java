@@ -1,7 +1,7 @@
-package code8.launcher.logic.changer;
+package code8.launcher.logic;
 
-import code8.launcher.model.changer.Coin;
-import code8.launcher.model.changer.Wallet;
+import code8.launcher.model.Coin;
+import code8.launcher.model.Wallet;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

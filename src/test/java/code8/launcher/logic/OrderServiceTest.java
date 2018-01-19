@@ -1,8 +1,6 @@
 package code8.launcher.logic;
 
-import code8.launcher.logic.changer.OrderService;
-import code8.launcher.logic.changer.WalletServiceBase;
-import code8.launcher.model.changer.*;
+import code8.launcher.model.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +10,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static code8.launcher.model.changer.CoinPair.BTCvsUSD;
-import static code8.launcher.model.changer.Order.Status.completed;
-import static code8.launcher.model.changer.Order.Status.created;
-import static code8.launcher.model.changer.OrderRequest.Type.Ask;
-import static code8.launcher.model.changer.OrderRequest.Type.Bid;
+import static code8.launcher.model.CoinPair.BTCvsUSD;
+import static code8.launcher.model.Order.Status.completed;
+import static code8.launcher.model.Order.Status.created;
+import static code8.launcher.model.OrderRequest.Type.Ask;
+import static code8.launcher.model.OrderRequest.Type.Bid;
 import static java.math.BigDecimal.*;
 import static org.junit.Assert.assertEquals;
 
