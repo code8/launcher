@@ -28,15 +28,15 @@ public class WalletServiceBaseTest {
     @Test
     public void walletCreationTest() {
         long accountId = 42L;
-        Wallet walletBTC = walletService.getWallet(accountId, BTC);
+        Wallet walletBTC = walletService.getAccountCoinWallet(accountId, BTC);
         assertNotNull(walletBTC);
         assertNotNull(walletBTC.getId());
         assertEquals(accountId, walletBTC.getAccountId());
         assertEquals(BTC, walletBTC.getCoin());
         assertEquals(BigDecimal.ZERO, walletBTC.getBalance());
-        assertEquals(BigDecimal.ZERO, walletService.getWallet(walletBTC.getId()).getBalance());
+        assertEquals(BigDecimal.ZERO, walletService.getWalletBalance(walletBTC.getId()));
 
-        Wallet walletRUB = walletService.getWallet(accountId, RUB);
+        Wallet walletRUB = walletService.getAccountCoinWallet(accountId, RUB);
         assertNotNull(walletBTC);
         assertNotNull(walletBTC.getId());
         assertNotEquals(walletBTC.getId(), walletRUB.getId());

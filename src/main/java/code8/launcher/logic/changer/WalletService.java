@@ -4,14 +4,15 @@ import code8.launcher.model.changer.Coin;
 import code8.launcher.model.changer.Wallet;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * todo: javadoc
  */
 public interface WalletService {
-    Wallet getWallet(long accountId, Coin coin);
-    Wallet getWallet(long walletId);
-    void changeBalance(long walletId, BigDecimal amount);
+    Wallet getAccountCoinWallet(long accountId, Coin coin);
+    BigDecimal getWalletBalance(long walletId);
+    void changeBalance(List<WalletBalanceChange> changes);
 
     class WalletNotFoundException extends RuntimeException {
         public WalletNotFoundException(long walletId) {
@@ -22,6 +23,30 @@ public interface WalletService {
     class FundsNotEnoughException extends RuntimeException {
         public FundsNotEnoughException(long walletId) {
             super("Not enough funds in wallet:" + walletId);
+        }
+    }
+
+    class WalletBusyException extends RuntimeException {
+        public WalletBusyException(long walletId) {
+            super("Can`t lock the wallet:" + walletId);
+        }
+    }
+
+    class WalletBalanceChange {
+        final long walletId;
+        final BigDecimal amountDelta;
+
+        public WalletBalanceChange(long walletId, BigDecimal amountDelta) {
+            this.walletId = walletId;
+            this.amountDelta = amountDelta;
+        }
+
+        public long getWalletId() {
+            return walletId;
+        }
+
+        public BigDecimal getAmountDelta() {
+            return amountDelta;
         }
     }
 }

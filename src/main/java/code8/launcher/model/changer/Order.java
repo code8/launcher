@@ -1,8 +1,10 @@
 package code8.launcher.model.changer;
 
 import code8.launcher.model.changer.OrderRequest.Type;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import static code8.launcher.model.changer.Order.Status.created;
 
@@ -11,7 +13,7 @@ import static code8.launcher.model.changer.Order.Status.created;
  */
 public abstract class Order {
     public enum Status {
-        created, processing, completed, error;
+        created, processing, completed, error, canceled
     }
 
     public static Order fromRequest(OrderRequest request) {
@@ -24,7 +26,6 @@ public abstract class Order {
         this.pair = request.pair;
         this.rate = request.rate;
     }
-
 
     protected final Type type;
     protected final CoinPair pair;
@@ -42,9 +43,13 @@ public abstract class Order {
     private long timestamp = System.currentTimeMillis();
     private int workerId;
 
+    @JsonIgnore
     public abstract Coin getFundsCoin();
+    @JsonIgnore
     public abstract Coin getProductCoin();
+    @JsonIgnore
     public abstract BigDecimal getCurrentFunds();
+    @JsonIgnore
     public abstract void spendFunds(BigDecimal transferredFunds);
 
     public long getId() {
@@ -108,6 +113,7 @@ public abstract class Order {
         return type;
     }
 
+    @JsonIgnore
     public boolean isLimitOrder() {
         return rate != null;
     }
@@ -124,9 +130,37 @@ public abstract class Order {
         return accountId;
     }
 
+    public CoinPair getPair() {
+        return pair;
+    }
+
+    public BigDecimal getCurrentProduct() {
+        return currentProduct;
+    }
+
     public void addProduct(BigDecimal product) {
         currentProduct = currentProduct.add(product);
     }
 
+    @JsonIgnore
     public abstract boolean isComplete();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return  getId() == order.getId() &&
+                getAccountId() == order.getAccountId() &&
+                getTimestamp() == order.getTimestamp() &&
+                getType() == order.getType() &&
+                getPair() == order.getPair() &&
+                getCurrentProduct().equals(order.getCurrentProduct()) &&
+                getStatus() == order.getStatus();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

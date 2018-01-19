@@ -7,10 +7,16 @@ import java.math.BigDecimal;
  */
 public class Wallet {
     long id;
-    long accountId;
-    String address;
-    Coin coin;
+    final long accountId;
+    final String address;
+    final Coin coin;
     BigDecimal balance = BigDecimal.ZERO;
+
+    public Wallet(long accountId, String address, Coin coin) {
+        this.accountId = accountId;
+        this.address = address;
+        this.coin = coin;
+    }
 
     public long getId() {
         return id;
@@ -34,18 +40,6 @@ public class Wallet {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setCoin(Coin coin) {
-        this.coin = coin;
     }
 
     public void setBalance(BigDecimal balance) {

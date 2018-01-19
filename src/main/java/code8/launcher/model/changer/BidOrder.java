@@ -10,6 +10,11 @@ public class BidOrder extends Order {
     private BigDecimal currentFunds;
     private BigDecimal productTarget;
 
+    public BidOrder() {
+        super(new OrderRequest(0));
+        initialFunds = BigDecimal.ZERO;
+    }
+
     public BidOrder(OrderRequest request) {
         super(request);
         this.initialFunds = isLimitOrder() ? request.volume.multiply(rate) : request.volume;

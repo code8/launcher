@@ -1,29 +1,74 @@
 buildscript {
 	ext {
 		springBootVersion = '1.5.9.RELEASE'
+		jooqPluginVersion = '2.0.9'
+		h2Version = '1.4.196'
 	}
 	repositories {
-		mavenCentral()
+		jcenter()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("nu.studer:gradle-jooq-plugin:${jooqPluginVersion}")
 	}
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'nu.studer.jooq'
 
 group = 'code8'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+	jcenter()
 }
 
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-jooq')
+	jooqRuntime("com.h2database:h2:${h2Version}")
+	compile("com.h2database:h2:${h2Version}")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+jooq {
+	sample(sourceSets.main) {
+		jdbc {
+			driver = 'org.h2.Driver'
+			url = 'jdbc:h2:file:~/exchanger'
+			user = 'sa'
+			password = ''
+		}
+
+		generator {
+			name = 'org.jooq.util.DefaultGenerator'
+			strategy {
+				name = 'org.jooq.util.DefaultGeneratorStrategy'
+				// ...
+			}
+			database {
+				name = 'org.jooq.util.h2.H2Database'
+				// inputSchema = 'EXCHANGER:PUBLIC'
+				// ...
+			}
+			generate {
+				relations = true
+				deprecated = false
+				records = true
+				immutablePojos = true
+				fluentSetters = true
+				// ...
+			}
+			target {
+				packageName = 'code8.persistence'
+				// directory = ...
+			}
+		}
+	}
 }

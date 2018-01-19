@@ -2,13 +2,16 @@ package code8.launcher.logic.changer;
 
 import code8.launcher.model.changer.Order;
 import code8.launcher.model.changer.OrderTransaction;
-import code8.launcher.model.changer.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static code8.launcher.model.changer.Order.Status.completed;
+import static code8.launcher.model.changer.Order.Status.processing;
+import static code8.launcher.model.changer.OrderTransaction.Status.processed;
 
 
 /**
@@ -16,23 +19,23 @@ import java.util.concurrent.ConcurrentMap;
  */
 @Service
 public class TransactionServiceBase implements TransactionService {
-    protected ConcurrentMap<Long, Wallet> lockedWallets = new ConcurrentHashMap<>();
+
+    protected final WalletService walletService;
 
     @Autowired
-    protected WalletService walletService;
-
-    @Autowired
-    protected OrderService orderService;
+    public TransactionServiceBase(WalletService walletService) {
+        this.walletService = walletService;
+    }
 
     @Override
     public void handleTransaction(OrderTransaction transaction) {
         transaction.setStatus(OrderTransaction.Status.processing);
 
-        Order bid = orderService.getOrder(transaction.getBidId());
-        Order ask = orderService.getOrder(transaction.getAskId());
+        Order bid = transaction.getBidOrder();
+        Order ask = transaction.getAskOrder();
 
-        bid.setStatus(Order.Status.processing);
-        ask.setStatus(Order.Status.processing);
+        bid.setStatus(processing);
+        ask.setStatus(processing);
 
         BigDecimal actualRate, transferAmount, productToAdd;
 
@@ -56,8 +59,11 @@ public class TransactionServiceBase implements TransactionService {
         transferAmount = bid.getCurrentFunds().min(ask.getCurrentFunds().multiply(actualRate));
         productToAdd = transferAmount.divide(actualRate);
 
-        walletService.changeBalance(bid.getProductWalletId(), productToAdd);
-        walletService.changeBalance(ask.getProductWalletId(), transferAmount);
+        walletService.changeBalance(Stream.of(
+                new WalletService.WalletBalanceChange(bid.getProductWalletId(), productToAdd),
+                new WalletService.WalletBalanceChange(ask.getProductWalletId(), transferAmount)
+                ).collect(Collectors.toList())
+        );
 
         bid.spendFunds(transferAmount);
         bid.addProduct(productToAdd);
@@ -67,14 +73,14 @@ public class TransactionServiceBase implements TransactionService {
 
         transaction.setTransferAmount(transferAmount);
         transaction.setActualRate(actualRate);
-        transaction.setStatus(OrderTransaction.Status.processed);
+        transaction.setStatus(processed);
 
         if (ask.isComplete()) {
-            ask.setStatus(Order.Status.completed);
+            ask.setStatus(completed);
         }
 
         if (bid.isComplete()) {
-            bid.setStatus(Order.Status.completed);
+            bid.setStatus(completed);
             if (bid.getCurrentFunds().compareTo((BigDecimal.ZERO)) > 0) {
                 // handle unused funds
             }

@@ -65,7 +65,7 @@ public class TransactionServiceTest {
         Order bidOrder = makeOrder(BTCvsUSD, data.bidAccountId, Bid, bidAmount, bidRate);
         Order askOrder = makeOrder(BTCvsUSD, data.askAccountId, Ask, askAmount, askRate);
 
-        OrderTransaction transaction = new OrderTransaction(bidOrder.getId(), askOrder.getId());
+        OrderTransaction transaction = new OrderTransaction(bidOrder, askOrder);
 
         transactionService.handleTransaction(transaction);
 
@@ -98,7 +98,7 @@ public class TransactionServiceTest {
         Order bidOrder = makeOrder(BTCvsUSD, data.bidAccountId, Bid, bidAmount, bidRate);
         Order askOrder1 = makeOrder(BTCvsUSD, data.askAccountId, Ask, askAmount, askRate);
 
-        transactionService.handleTransaction(new OrderTransaction(bidOrder.getId(), askOrder1.getId()));
+        transactionService.handleTransaction(new OrderTransaction(bidOrder, askOrder1));
 
         assertEquals(data.askFundsWalletInitialBalance.subtract(askAmount), data.askFundsWallet.getBalance());
         assertEquals(data.askProductWalletInitialBalance.add(askAmount.multiply(askRate)), data.askProductWallet.getBalance());
@@ -107,7 +107,7 @@ public class TransactionServiceTest {
         assertEquals(processing, bidOrder.getStatus());
 
         Order askOrder2 = makeOrder(BTCvsUSD, data.askAccountId, Ask, askAmount, askRate);
-        transactionService.handleTransaction(new OrderTransaction(bidOrder.getId(), askOrder2.getId()));
+        transactionService.handleTransaction(new OrderTransaction(bidOrder, askOrder2));
 
         assertEquals(data.bidFundsWalletInitialBalance.subtract(bidAmount.multiply(bidRate)), data.bidFundsWallet.getBalance());
         assertEquals(data.askFundsWalletInitialBalance.subtract(askAmount.multiply(new BigDecimal(2))), data.askFundsWallet.getBalance());
@@ -137,7 +137,7 @@ public class TransactionServiceTest {
         Order bidOrder = makeOrder(BTCvsUSD, data.bidAccountId, Bid, bidAmount, bidRate);
         Order askOrder = makeOrder(BTCvsUSD, data.askAccountId, Ask, askAmount, askRate);
 
-        transactionService.handleTransaction(new OrderTransaction(bidOrder.getId(), askOrder.getId()));
+        transactionService.handleTransaction(new OrderTransaction(bidOrder, askOrder));
 
         assertEquals(data.bidFundsWalletInitialBalance.subtract(bidAmount), data.bidFundsWallet.getBalance());
         assertEquals(data.askFundsWalletInitialBalance.subtract(askAmount), data.askFundsWallet.getBalance());
@@ -163,7 +163,7 @@ public class TransactionServiceTest {
         Order bidOrder = makeOrder(BTCvsUSD, data.bidAccountId, Bid, bidAmount, bidRate);
         Order askOrder1 = makeOrder(BTCvsUSD, data.askAccountId, Ask, askAmount, askRate);
 
-        transactionService.handleTransaction(new OrderTransaction(bidOrder.getId(), askOrder1.getId()));
+        transactionService.handleTransaction(new OrderTransaction(bidOrder, askOrder1));
 
         assertEquals(data.askFundsWalletInitialBalance.subtract(askAmount), data.askFundsWallet.getBalance());
         assertEquals(data.askProductWalletInitialBalance.add(askAmount.multiply(askRate)), data.askProductWallet.getBalance());
@@ -172,7 +172,7 @@ public class TransactionServiceTest {
         assertEquals(processing, bidOrder.getStatus());
 
         Order askOrder2 = makeOrder(BTCvsUSD, data.askAccountId, Ask, askAmount, askRate);
-        transactionService.handleTransaction(new OrderTransaction(bidOrder.getId(), askOrder2.getId()));
+        transactionService.handleTransaction(new OrderTransaction(bidOrder, askOrder2));
 
         assertEquals(data.bidFundsWalletInitialBalance.subtract(bidAmount), data.bidFundsWallet.getBalance());
         assertEquals(data.askFundsWalletInitialBalance.subtract(askAmount.multiply(new BigDecimal(2))), data.askFundsWallet.getBalance());
@@ -186,13 +186,13 @@ public class TransactionServiceTest {
 
 
     private Wallet makeWallet(long accountId, Coin coin, BigDecimal balance) {
-        Wallet wallet = walletService.getWallet(accountId, coin);
+        Wallet wallet = walletService.getAccountCoinWallet(accountId, coin);
         wallet.setBalance(balance);
         return wallet;
     }
 
     private Order makeOrder(CoinPair pair, long accountId, OrderRequest.Type type, BigDecimal volume, BigDecimal rate) {
-        OrderRequest bidRequest = new OrderRequest();
+        OrderRequest bidRequest = new OrderRequest(ThreadLocalRandom.current().nextInt());
         bidRequest.setType(type);
         bidRequest.setPair(pair);
         bidRequest.setAccountId(accountId);

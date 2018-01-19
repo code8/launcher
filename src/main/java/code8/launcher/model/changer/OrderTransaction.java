@@ -8,21 +8,21 @@ import java.math.BigDecimal;
 public class OrderTransaction {
 
     public enum Status {
-        created, processing, processed, error;
+        created, processing, processed, error
     }
 
     long id;
     Status status = Status.created;
-    private final long bidId;
-    private final long askId;
+    private final Order bidOrder;
+    private final Order askOrder;
     private BigDecimal transferAmount;
     private BigDecimal actualRate;
     long timestamp = System.currentTimeMillis();
     int workerId;
 
-    public OrderTransaction(long bidId, long askId) {
-        this.bidId = bidId;
-        this.askId = askId;
+    public OrderTransaction(Order bidOrder, Order askOrder) {
+        this.bidOrder = bidOrder;
+        this.askOrder = askOrder;
     }
 
     public long getId() {
@@ -33,12 +33,12 @@ public class OrderTransaction {
         this.id = id;
     }
 
-    public long getBidId() {
-        return bidId;
+    public Order getBidOrder() {
+        return bidOrder;
     }
 
-    public long getAskId() {
-        return askId;
+    public Order getAskOrder() {
+        return askOrder;
     }
 
     public BigDecimal getTransferAmount() {

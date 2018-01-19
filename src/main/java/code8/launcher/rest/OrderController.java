@@ -5,10 +5,7 @@ import code8.launcher.model.changer.Order;
 import code8.launcher.model.changer.OrderRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * todo: javadoc
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     public static final String BASE_URL = "/orders";
     public static final String NEW_ORDER = "/new";
+    public static final String CANCEL_ORDER = "/cancel";
 
     @Autowired
     private OrderService orderService;
@@ -25,5 +23,15 @@ public class OrderController {
     @PostMapping(OrderController.NEW_ORDER)
     public ResponseEntity<Order> makeOrder(@RequestBody OrderRequest request) {
         return ResponseEntity.ok(orderService.makeOrder(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<Order> getOrder(@RequestParam long orderId) {
+        return ResponseEntity.ok(orderService.getOrder(orderId));
+    }
+
+    @PutMapping(OrderController.CANCEL_ORDER)
+    public void cancelOrder(@RequestParam long orderId) {
+        orderService.cancelOrder(orderId);
     }
 }
